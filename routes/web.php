@@ -7,6 +7,10 @@ Route::get('/', function () {
 });
 
 
-Route::get('/test', function () {
+Route::get('/dashboard', function () {
     return view('index');
+})->name('dashboard');
+
+Route::get('/test-login', function () {
+    return view('login-page');
 });

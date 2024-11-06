@@ -1,6 +1,6 @@
 <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content js-simplebar">
-        <a class="bg-white sidebar-brand text-dark" href="{{ url('/') }}">
+        <a class="bg-white sidebar-brand text-dark" href="{{ route('dashboard') }}">
             <div class="d-flex flex-column align-items-center">
                 <img src="{{ asset('assets/img/icons/arkanza.png') }}" alt="Arkanza Logo" class="align-middle"
                     style="height: 75px; margin-right: 5px;">
@@ -10,89 +10,59 @@
 
         <ul class="sidebar-nav">
             <li class="sidebar-header">
-                Pages
+                Home
             </li>
 
-            <li class="sidebar-item active">
-                <a class="sidebar-link" href="index.html">
+            <li class="sidebar-item {{ Request::is('dashboard') ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ route('dashboard') }}">
                     <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
                 </a>
             </li>
 
+            <li class="sidebar-header">
+                Data
+            </li>
+
             <li class="sidebar-item">
                 <a class="sidebar-link" href="pages-profile.html">
-                    <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
+                    <i class="align-middle" data-feather="database"></i> <span class="align-middle">Data Batik</span>
                 </a>
             </li>
 
             <li class="sidebar-item">
                 <a class="sidebar-link" href="pages-sign-in.html">
-                    <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Sign In</span>
-                </a>
-            </li>
-
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="pages-sign-up.html">
-                    <i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Sign
-                        Up</span>
-                </a>
-            </li>
-
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="pages-blank.html">
-                    <i class="align-middle" data-feather="book"></i> <span class="align-middle">Blank</span>
+                    <i class="align-middle" data-feather="database"></i> <span class="align-middle">Data
+                        Penjualan</span>
                 </a>
             </li>
 
             <li class="sidebar-header">
-                Tools & Components
+                Perdiksi
             </li>
 
             <li class="sidebar-item">
-                <a class="sidebar-link" href="ui-buttons.html">
-                    <i class="align-middle" data-feather="square"></i> <span class="align-middle">Buttons</span>
+                <a class="sidebar-link" href="pages-profile.html">
+                    <i class="align-middle" data-feather="search"></i> <span class="align-middle">Kebutuhan</span>
                 </a>
             </li>
 
             <li class="sidebar-item">
-                <a class="sidebar-link" href="ui-forms.html">
-                    <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Forms</span>
-                </a>
-            </li>
-
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="ui-cards.html">
-                    <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Cards</span>
-                </a>
-            </li>
-
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="ui-typography.html">
-                    <i class="align-middle" data-feather="align-left"></i> <span class="align-middle">Typography</span>
-                </a>
-            </li>
-
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="icons-feather.html">
-                    <i class="align-middle" data-feather="coffee"></i> <span class="align-middle">Icons</span>
+                <a class="sidebar-link" href="pages-sign-in.html">
+                    <i class="align-middle" data-feather="layers"></i> <span class="align-middle">Batik</span>
                 </a>
             </li>
 
             <li class="sidebar-header">
-                Plugins & Addons
+                Analisis
             </li>
 
             <li class="sidebar-item">
-                <a class="sidebar-link" href="charts-chartjs.html">
-                    <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Charts</span>
+                <a class="sidebar-link" href="pages-profile.html">
+                    <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Lihat Hasil
+                        Analisis</span>
                 </a>
             </li>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="maps-google.html">
-                    <i class="align-middle" data-feather="map"></i> <span class="align-middle">Maps</span>
-                </a>
-            </li>
         </ul>
     </div>
 </nav>

@@ -12150,8 +12150,8 @@ a.sidebar-link svg {
 .sidebar-item.active > .sidebar-link {
     background: linear-gradient(
         90deg,
-        rgba(59, 125, 221, 0.1),
-        rgba(59, 125, 221, 0.088) 50%,
+        rgba(247, 185, 27, 0.5),
+        rgba(247, 185, 27, 0.088) 50%,
         transparent
     );
     border-left-color: #3b7ddd;
