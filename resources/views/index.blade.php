@@ -1,13 +1,11 @@
 @extends('layouts.app')
 
 @push('styles-css')
-    <style>
-        .sidebar-brand {
-            font-size: 0.9rem;
-            padding: 1rem;
-        }
-    </style>
 @endpush
+
+@section('title')
+    <h1 class="mb-3 h3"><strong>Analytics</strong> Dashboard</h1>
+@endsection
 
 @section('content')
     <div class="col-xl-6 col-xxl-5 d-flex">
@@ -272,7 +270,7 @@
     </div>
 @endsection
 
-@section('scripts')
+@push('scripts')
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
@@ -498,4 +496,4 @@
             });
         });
     </script>
-@endsection
+@endpush

@@ -16,7 +16,7 @@
             <main class="content">
                 <div class="p-0 container-fluid">
 
-                    <h1 class="mb-3 h3"><strong>Analytics</strong> Dashboard</h1>
+                    @yield('title')
 
                     <div class="row">
                         @yield('content')
@@ -38,7 +38,7 @@
     </div>
 
     <script src="{{ asset('assets/js/app.js') }}"></script>
-    @yield('scripts')
+    @stack('scripts')
 
 </body>
 
