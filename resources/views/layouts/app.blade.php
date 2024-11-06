@@ -3,7 +3,7 @@
 
 <head>
     @include('include.meta')
-    @yield('styles-css')
+    @stack('styles-css')
 </head>
 
 <body>

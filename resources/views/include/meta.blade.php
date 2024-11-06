@@ -7,15 +7,11 @@
     content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<link rel="shortcut icon" href="{{ asset('assets/img/icons/icon-48x48.png') }}" />
+<link rel="shortcut icon" href="{{ asset('assets/img/icons/arkanza.png') }}" />
 
 <link rel="canonical" href="https://demo-basic.adminkit.io/" />
 
-<style>
-    @yield('styles-css')
-</style>
-
-<title>Admin Dashboard - {{ env('APP_NAME') }}</title>
+<title>Admin Dashboard - {{ config('app.name', 'Arkanza') }}</title>
 
 <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">

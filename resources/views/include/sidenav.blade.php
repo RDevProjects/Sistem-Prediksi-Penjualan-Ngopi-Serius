@@ -1,7 +1,11 @@
 <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content js-simplebar">
-        <a class="sidebar-brand" href="{{ url('/') }}">
-            <span class="align-middle">{{ env('APP_NAME') }}</span>
+        <a class="bg-white sidebar-brand text-dark" href="{{ url('/') }}">
+            <div class="d-flex flex-column align-items-center">
+                <img src="{{ asset('assets/img/icons/arkanza.png') }}" alt="Arkanza Logo" class="align-middle"
+                    style="height: 75px; margin-right: 5px;">
+                <span class="align-middle">{{ env('APP_NAME') }}</span>
+            </div>
         </a>
 
         <ul class="sidebar-nav">
@@ -90,17 +94,5 @@
                 </a>
             </li>
         </ul>
-
-        <div class="sidebar-cta">
-            <div class="sidebar-cta-content">
-                <strong class="mb-2 d-inline-block">Upgrade to Pro</strong>
-                <div class="mb-3 text-sm">
-                    Are you looking for more components? Check out our premium version.
-                </div>
-                <div class="d-grid">
-                    <a href="upgrade-to-pro.html" class="btn btn-primary">Upgrade to Pro</a>
-                </div>
-            </div>
-        </div>
     </div>
 </nav>

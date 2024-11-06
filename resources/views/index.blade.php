@@ -1,5 +1,14 @@
 @extends('layouts.app')
 
+@push('styles-css')
+    <style>
+        .sidebar-brand {
+            font-size: 0.9rem;
+            padding: 1rem;
+        }
+    </style>
+@endpush
+
 @section('content')
     <div class="col-xl-6 col-xxl-5 d-flex">
         <div class="w-100">
