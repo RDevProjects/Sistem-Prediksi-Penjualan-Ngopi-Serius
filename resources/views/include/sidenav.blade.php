@@ -36,10 +36,10 @@
 
             <li class="sidebar-item">
                 <a class="sidebar-link" href="pages-profile.html">
-                    <i class="align-middle" data-feather="search"></i> <span class="align-middle">Kebutuhan</span>
+                    <i class="align-middle" data-feather="search"></i> <span class="align-middle">Analisis</span>
                 </a>
             </li>
-
+            {{-- 
             <li class="sidebar-item">
                 <a class="sidebar-link" href="pages-sign-in.html">
                     <i class="align-middle" data-feather="layers"></i> <span class="align-middle">Batik</span>
@@ -55,7 +55,7 @@
                     <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Lihat Hasil
                         Analisis</span>
                 </a>
-            </li>
+            </li> --}}
 
         </ul>
     </div>

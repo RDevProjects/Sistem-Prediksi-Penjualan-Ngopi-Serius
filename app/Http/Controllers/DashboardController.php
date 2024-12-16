@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\Penjualan;
 use App\Models\Analisa;
 
 class DashboardController extends Controller
@@ -12,6 +13,9 @@ class DashboardController extends Controller
     {
         $analisa = Analisa::count();
         $nameUser = Auth::user()->name;
-        return view('index', compact('analisa', 'nameUser'));
+
+        $jumlahDataPenjualan = Penjualan::count();
+        $dataPenjualan = Penjualan::sum('jumlah');
+        return view('index', compact('analisa', 'nameUser', 'jumlahDataPenjualan', 'dataPenjualan'));
     }
 }
