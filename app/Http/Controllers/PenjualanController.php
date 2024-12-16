@@ -37,4 +37,35 @@ class PenjualanController extends Controller
 
         return redirect()->route('penjualan')->with('success', 'Data penjualan berhasil ditambahkan');
     }
+
+    public function edit($id)
+    {
+        $penjualan = Penjualan::find($id);
+        return view('penjualan.edit', compact('penjualan'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'bulan' => 'required',
+            'tahun' => 'required',
+            'jumlah' => 'required',
+        ]);
+
+        $penjualan = Penjualan::find($id);
+        $penjualan->bulan = $request->bulan;
+        $penjualan->tahun = $request->tahun;
+        $penjualan->jumlah = $request->jumlah;
+        $penjualan->save();
+
+        return redirect()->route('penjualan')->with('success', 'Data penjualan berhasil diubah');
+    }
+
+    public function destroy($id)
+    {
+        $penjualan = Penjualan::find($id);
+        $penjualan->delete();
+
+        return redirect()->route('penjualan')->with('success', 'Data penjualan berhasil dihapus');
+    }
 }

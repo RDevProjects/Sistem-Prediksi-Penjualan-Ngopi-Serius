@@ -17,6 +17,11 @@ Route::get('/', function () {
 Route::middleware([isLogin::class])->prefix('dashboard')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/penjualan', [PenjualanController::class, 'index'])->name('penjualan');
+    Route::get('/penjualan/create', [PenjualanController::class, 'create'])->name('penjualan.create');
+    Route::post('/penjualan/store', [PenjualanController::class, 'store'])->name('penjualan.store');
+    Route::get('/penjualan/edit/{id}', [PenjualanController::class, 'edit'])->name('penjualan.edit');
+    Route::put('/penjualan/update/{id}', [PenjualanController::class, 'update'])->name('penjualan.update');
+    Route::delete('/penjualan/delete/{id}', [PenjualanController::class, 'destroy'])->name('penjualan.delete');
 });
 
 

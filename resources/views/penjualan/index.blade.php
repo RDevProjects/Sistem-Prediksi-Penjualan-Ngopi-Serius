@@ -2,6 +2,7 @@
 
 @push('styles-css')
     <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
 @endpush
@@ -24,20 +25,25 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="card-title mb-0">Data Penjualan</h5>
-                <button class="btn btn-primary" id="addDataBtn">Input Data</button>
+                <a href="{{ route('penjualan.create') }}" class="btn btn-primary" id="addDataBtn">Input Data</a>
             </div>
 
             @if (session('success'))
-                <div class="alert alert-success">
+                <div class="alert alert-success alert-dismissible fade show text-center bg-success text-white py-3"
+                    role="alert">
                     {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
 
             @if (session('error'))
-                <div class="alert alert-danger">
+                <div class="alert alert-danger alert-dismissible fade show text-center bg-success text-white py-3"
+                    role="alert">
                     {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
+
             <div class="card-body">
                 <table id="penjualanTable" class="table table-striped table-bordered" style="width:100%">
                     <thead>
@@ -57,12 +63,12 @@
                                 <td>{{ $penjualan->tahun }}</td>
                                 <td>{{ number_format($penjualan->jumlah, 0, ',', '.') }}</td>
                                 <td>
-                                    <a href="{{ route('penjualan', $penjualan->id) }}"
+                                    <a href="{{ route('penjualan.edit', $penjualan->id) }}"
                                         class="btn btn-warning btn-sm">Edit</a>
                                     <button class="btn btn-danger btn-sm"
                                         onclick="deletePenjualan({{ $penjualan->id }})">Delete</button>
                                     <form id="delete-form-{{ $penjualan->id }}"
-                                        action="{{ route('penjualan', $penjualan->id) }}" method="POST"
+                                        action="{{ route('penjualan.delete', $penjualan->id) }}" method="POST"
                                         style="display: none;">
                                         @csrf
                                         @method('DELETE')
