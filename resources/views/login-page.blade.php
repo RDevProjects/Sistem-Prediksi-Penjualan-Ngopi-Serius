@@ -49,9 +49,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mb-3 text-center">
+                        {{-- <div class="mb-3 text-center">
                             Tidak punya akun? <a href="pages-sign-up.html">Daftar</a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

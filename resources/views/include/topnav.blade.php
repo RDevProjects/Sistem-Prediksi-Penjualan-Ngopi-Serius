@@ -12,7 +12,7 @@
 
                 <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
                     <img src="{{ asset('assets/img/avatars/avatar.png') }}" class="rounded avatar img-fluid me-1"
-                        alt="Admin" /> <span class="text-dark">{{ $nameUser }}</span>
+                        alt="Admin" /> <span class="text-dark">{{ $nameUser ?? '-' }}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end">
                     <form method="POST" action="/logout">

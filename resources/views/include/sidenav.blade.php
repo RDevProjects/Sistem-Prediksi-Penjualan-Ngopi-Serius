@@ -23,14 +23,8 @@
                 Data
             </li>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="pages-profile.html">
-                    <i class="align-middle" data-feather="database"></i> <span class="align-middle">Data Batik</span>
-                </a>
-            </li>
-
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="pages-sign-in.html">
+            <li class="sidebar-item {{ Request::is('dashboard/penjualan') ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ route('penjualan') }}">
                     <i class="align-middle" data-feather="database"></i> <span class="align-middle">Data
                         Penjualan</span>
                 </a>
