@@ -10,7 +10,7 @@
                 <div class="mx-auto col-sm-10 col-md-8 col-lg-6 col-xl-5 d-table h-100">
                     <div class="align-middle d-table-cell">
                         <div class="text-center">
-                            <img src="{{ asset('assets/img/icons/arkanza.png') }}" alt="Logo Arkanza" class="w-25">
+                            <img src="{{ asset('assets/img/icons/icon.png') }}" alt="Logo Ngopi" class="w-25">
                         </div>
                         <div class="mt-4 text-center">
                             <h1 class="h2">Selamat datang kembali Admin!</h1>
@@ -22,11 +22,12 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="m-sm-3">
-                                    <form>
+                                    <form action="{{ route('login') }}" method="POST">
+                                        @csrf
                                         <div class="mb-3">
-                                            <label class="form-label">Email</label>
-                                            <input class="form-control form-control-lg" type="email" name="email"
-                                                placeholder="Masukkan email Anda" />
+                                            <label class="form-label">Email atau Username</label>
+                                            <input class="form-control form-control-lg" type="text" name="login"
+                                                placeholder="Masukkan email atau username Anda" />
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Kata Sandi</label>
@@ -42,7 +43,7 @@
                                             </div>
                                         </div>
                                         <div class="gap-2 mt-3 d-grid">
-                                            <a href="index.html" class="btn btn-lg btn-primary">Masuk</a>
+                                            <button type="submit" class="btn btn-lg btn-primary">Masuk</button>
                                         </div>
                                     </form>
                                 </div>

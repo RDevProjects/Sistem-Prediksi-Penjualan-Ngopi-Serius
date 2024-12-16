@@ -2,7 +2,7 @@
     <div class="sidebar-content js-simplebar">
         <a class="bg-white sidebar-brand text-dark" href="{{ route('dashboard') }}">
             <div class="d-flex flex-column align-items-center">
-                <img src="{{ asset('assets/img/icons/arkanza.png') }}" alt="Arkanza Logo" class="align-middle"
+                <img src="{{ asset('assets/img/icons/icon.png') }}" alt="Arkanza Logo" class="align-middle"
                     style="height: 75px; margin-right: 5px;">
                 <span class="align-middle">{{ env('APP_NAME') }}</span>
             </div>
