@@ -41,7 +41,8 @@ class PenjualanController extends Controller
     public function edit($id)
     {
         $penjualan = Penjualan::find($id);
-        return view('penjualan.edit', compact('penjualan'));
+        $dataPenjualan = Penjualan::all();
+        return view('penjualan.index', compact('penjualan', 'dataPenjualan'));
     }
 
     public function update(Request $request, $id)

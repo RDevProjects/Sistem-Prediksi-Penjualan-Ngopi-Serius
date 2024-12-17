@@ -23,26 +23,104 @@
 @section('content')
     <div class="col-12">
         <div class="card">
+            <div class="card-header">
+                <div class="card-title">Tambah Penjualan</div>
+            </div>
+            <div class="card-body">
+                <form
+                    action="{{ isset($penjualan) ? route('penjualan.update', $penjualan->id) : route('penjualan.store') }}"
+                    method="POST">
+                    @csrf
+                    @if (isset($penjualan))
+                        @method('PUT')
+                    @endif
+                    @csrf
+                    <div class="form-group mb-3">
+                        <label for="bulan">Bulan</label>
+                        <select class="form-control" id="bulan" name="bulan" required>
+                            <option value="" disabled selected>Pilih Bulan</option>
+                            <option value="Januari"
+                                {{ isset($penjualan) && $penjualan->bulan == 'Januari' ? 'selected' : '' }}>Januari
+                            </option>
+                            <option value="Februari"
+                                {{ isset($penjualan) && $penjualan->bulan == 'Februari' ? 'selected' : '' }}>Februari
+                            </option>
+                            <option value="Maret"
+                                {{ isset($penjualan) && $penjualan->bulan == 'Maret' ? 'selected' : '' }}>Maret</option>
+                            <option value="April"
+                                {{ isset($penjualan) && $penjualan->bulan == 'April' ? 'selected' : '' }}>April</option>
+                            <option value="Mei" {{ isset($penjualan) && $penjualan->bulan == 'Mei' ? 'selected' : '' }}>
+                                Mei</option>
+                            <option value="Juni" {{ isset($penjualan) && $penjualan->bulan == 'Juni' ? 'selected' : '' }}>
+                                Juni</option>
+                            <option value="Juli" {{ isset($penjualan) && $penjualan->bulan == 'Juli' ? 'selected' : '' }}>
+                                Juli</option>
+                            <option value="Agustus"
+                                {{ isset($penjualan) && $penjualan->bulan == 'Agustus' ? 'selected' : '' }}>Agustus
+                            </option>
+                            <option value="September"
+                                {{ isset($penjualan) && $penjualan->bulan == 'September' ? 'selected' : '' }}>
+                                September</option>
+                            <option value="Oktober"
+                                {{ isset($penjualan) && $penjualan->bulan == 'Oktober' ? 'selected' : '' }}>Oktober
+                            </option>
+                            <option value="November"
+                                {{ isset($penjualan) && $penjualan->bulan == 'November' ? 'selected' : '' }}>November
+                            </option>
+                            <option value="Desember"
+                                {{ isset($penjualan) && $penjualan->bulan == 'Desember' ? 'selected' : '' }}>Desember
+                            </option>
+                            <option value="Desember">Desember</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="tahun">Tahun</label>
+                        <select class="form-control" id="tahun" name="tahun" required>
+                            <option value="">Pilih Tahun</option>
+                            @foreach (range(date('Y'), date('Y') - 10) as $tahun)
+                                <option value="{{ $tahun }}"
+                                    {{ old('tahun', isset($penjualan) ? $penjualan->tahun : '') == $tahun ? 'selected' : '' }}>
+                                    {{ $tahun }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="jumlah">Jumlah</label>
+                        <input type="number" class="form-control" id="jumlah" name="jumlah" placeholder="Enter Jumlah"
+                            value="{{ old('jumlah', isset($penjualan) ? $penjualan->jumlah : '') }}" min="0"
+                            required />
+                    </div>
+                    <div class="form-group mb-3 d-flex justify-content-start">
+                        <button type="submit" class="btn btn-success me-2">Submit</button>
+                        <button type="reset" class="btn btn-secondary" id="resetButton">Clear</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('content2')
+    <div class="col-12">
+        <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="card-title mb-0">Data Penjualan</h5>
-                <a href="{{ route('penjualan.create') }}" class="btn btn-primary" id="addDataBtn">Input Data</a>
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show text-center bg-success text-white p-3 rounded"
+                        role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
+                @if (session('error'))
+                    <div class="alert alert-danger bg-danger alert-dismissible fade show text-center bg-success text-white p-3 rounded"
+                        role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
             </div>
-
-            @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show text-center bg-success text-white py-3"
-                    role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-
-            @if (session('error'))
-                <div class="alert alert-danger alert-dismissible fade show text-center bg-success text-white py-3"
-                    role="alert">
-                    {{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
 
             <div class="card-body">
                 <table id="penjualanTable" class="table table-striped table-bordered" style="width:100%">
@@ -98,7 +176,8 @@
                 "searching": true,
                 "ordering": true,
                 "info": true,
-                "responsive": true
+                "responsive": true,
+                "pageLength": 5
             });
         });
 
@@ -117,5 +196,10 @@
                 }
             })
         }
+        document.getElementById('resetButton').addEventListener('click', function() {
+            document.getElementById('bulan').selectedIndex = 0;
+            document.getElementById('tahun').selectedIndex = 0;
+            document.getElementById('jumlah').value = '';
+        });
     </script>
 @endpush
