@@ -36,10 +36,10 @@
                                     </div>
                                 </div>
                                 <h1 class="mt-1 mb-3">{{ $jumlahDataPenjualan ?? '-' }}</h1>
-                                <div class="mb-0">
+                                {{-- <div class="mb-0">
                                     <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -3.65% </span>
                                     <span class="text-muted">Since last week</span>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -58,10 +58,32 @@
                                     </div>
                                 </div>
                                 <h1 class="mt-1 mb-3">{{ $dataPenjualan ?? '-' }}</h1>
-                                <div class="mb-0">
+                                {{-- <div class="mb-0">
                                     <span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> 6.65% </span>
                                     <span class="text-muted">Since last week</span>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="mt-0 col">
+                                        <h5 class="card-title">Jumlah Penjualan</h5>
+                                    </div>
+
+                                    <div class="col-auto">
+                                        <div class="stat text-primary">
+                                            <i class="align-middle" data-feather="dollar-sign"></i>
+                                        </div>
+                                    </div>
                                 </div>
+                                <h1 class="mt-1 mb-3">{{ $dataAnalisaCount ?? '-' }}</h1>
+                                {{-- <div class="mb-0">
+                                    <span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> 6.65% </span>
+                                    <span class="text-muted">Since last week</span>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -96,48 +118,32 @@
             new Chart(document.getElementById("chartjs-dashboard-line"), {
                 type: "line",
                 data: {
-                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov",
-                        "Dec"
+                    labels: [
+                        @foreach ($dataAnalisa as $data)
+                            "{{ $data->bulan }} {{ $data->tahun }}",
+                        @endforeach
                     ],
                     datasets: [{
-                            label: "Sales (Rp)",
+                            label: "Data Aktual",
                             fill: true,
                             backgroundColor: gradient,
                             borderColor: window.theme.primary,
                             data: [
-                                2115,
-                                1562,
-                                1584,
-                                1892,
-                                1587,
-                                1923,
-                                2566,
-                                2448,
-                                2805,
-                                3438,
-                                2917,
-                                3327
+                                @foreach ($dataAnalisa as $data)
+                                    {{ $data->jumlah }},
+                                @endforeach
                             ],
                             lineTension: 0.1
                         },
                         {
-                            label: "Interest",
+                            label: "Data Prediksi",
                             fill: true,
                             backgroundColor: "rgba(255, 99, 132, 0.2)",
                             borderColor: "rgba(255, 99, 132, 1)",
                             data: [
-                                1500,
-                                1200,
-                                1300,
-                                1700,
-                                1400,
-                                1800,
-                                2200,
-                                2100,
-                                2500,
-                                3000,
-                                2700,
-                                3100
+                                @foreach ($dataAnalisa as $data)
+                                    {{ $data->wma }},
+                                @endforeach
                             ],
                             lineTension: 0.1
                         }
@@ -171,7 +177,7 @@
                             ticks: {
                                 stepSize: 500,
                                 callback: function(value, index, values) {
-                                    return 'Rp ' + value;
+                                    return value;
                                 }
                             },
                             display: true,

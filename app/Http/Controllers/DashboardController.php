@@ -11,11 +11,14 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $analisa = Analisa::count();
         $nameUser = Auth::user()->name;
 
         $jumlahDataPenjualan = Penjualan::count();
         $dataPenjualan = Penjualan::sum('jumlah');
-        return view('index', compact('analisa', 'nameUser', 'jumlahDataPenjualan', 'dataPenjualan'));
+
+        $dataAnalisa = Analisa::get();
+        $dataAnalisaCount = Analisa::count();
+
+        return view('index', compact('dataAnalisa', 'nameUser', 'jumlahDataPenjualan', 'dataPenjualan', 'dataAnalisaCount'));
     }
 }

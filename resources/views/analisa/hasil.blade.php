@@ -90,7 +90,7 @@
                                 <td>{{ $data->tahun }}</td>
                                 <td>{{ $data->bulan }}</td>
                                 <td>{{ number_format($data->jumlah, 0, ',', '.') }}</td>
-                                <td>{{ $data->wma ?? '' }}</td>
+                                <td>{{ number_format($data->wma ?? 0, 0, ',', '.') }}</td>
                                 <td>{{ $data->mad ?? '' }}</td>
                                 <td>{{ $data->mse ?? '' }}</td>
                                 <td>{{ $data->mape ?? '' }}</td>
@@ -115,6 +115,19 @@
             </div>
         </div>
     </div>
+    <div class="col-xl-12">
+        <div class="card flex-fill w-100">
+            <div class="card-header">
+
+                <h5 class="mb-0 card-title">Prediksi</h5>
+            </div>
+            <div class="py-3 card-body">
+                <div class="chart chart-sm">
+                    <canvas id="chartjs-dashboard-line"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('scripts')
@@ -133,6 +146,89 @@
                 "ordering": false,
                 "info": false,
                 "responsive": true,
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
+            var gradient = ctx.createLinearGradient(0, 0, 0, 225);
+            gradient.addColorStop(0, "rgba(215, 227, 244, 1)");
+            gradient.addColorStop(1, "rgba(215, 227, 244, 0)");
+            // Line chart
+            new Chart(document.getElementById("chartjs-dashboard-line"), {
+                type: "line",
+                data: {
+                    labels: [
+                        @foreach ($dataAnalisa as $data)
+                            "{{ $data->bulan }} {{ $data->tahun }}",
+                        @endforeach
+                    ],
+                    datasets: [{
+                            label: "Data Aktual",
+                            fill: true,
+                            backgroundColor: gradient,
+                            borderColor: window.theme.primary,
+                            data: [
+                                @foreach ($dataAnalisa as $data)
+                                    {{ $data->jumlah }},
+                                @endforeach
+                            ],
+                            lineTension: 0.1
+                        },
+                        {
+                            label: "Data Prediksi",
+                            fill: true,
+                            backgroundColor: "rgba(255, 99, 132, 0.2)",
+                            borderColor: "rgba(255, 99, 132, 1)",
+                            data: [
+                                @foreach ($dataAnalisa as $data)
+                                    {{ $data->wma }},
+                                @endforeach
+                            ],
+                            lineTension: 0.1
+                        }
+                    ]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    tooltips: {
+                        intersect: false
+                    },
+                    hover: {
+                        intersect: true
+                    },
+                    plugins: {
+                        filler: {
+                            propagate: false
+                        }
+                    },
+                    scales: {
+                        xAxes: [{
+                            reverse: true,
+                            // gridLines: {
+                            //     color: "rgba(0,0,0,0.0)"
+                            // }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                stepSize: 500,
+                                callback: function(value, index, values) {
+                                    return value;
+                                }
+                            },
+                            display: true,
+                            borderDash: [3, 3],
+                            // gridLines: {
+                            //     color: "rgba(0,0,0,0.0)"
+                            // }
+                        }]
+                    }
+                }
             });
         });
     </script>
