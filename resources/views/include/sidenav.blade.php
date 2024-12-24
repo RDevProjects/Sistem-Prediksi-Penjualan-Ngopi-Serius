@@ -40,8 +40,8 @@
                 </a>
             </li>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="pages-profile.html">
+            <li class="sidebar-item {{ Request::is('dashboard/analisis/view') ? 'active' : '' }} ">
+                <a class="sidebar-link" href="{{ route('analisis.view') }}">
                     <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Lihat Hasil
                         Analisis</span>
                 </a>
