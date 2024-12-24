@@ -18,7 +18,7 @@
 
 @section('content')
     <div class="container">
-        <div class="col-xl-12 col-xxl-5 d-flex">
+        <div class="col-xl-12 d-flex">
             <div class="w-100">
                 <div class="row">
                     <div class="col-sm-3">
@@ -70,7 +70,7 @@
         </div>
     </div>
 
-    <div class="col-xl-12 col-xxl-7">
+    <div class="col-xl-12">
         <div class="card flex-fill w-100">
             <div class="card-header">
 

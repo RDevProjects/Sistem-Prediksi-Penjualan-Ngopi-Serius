@@ -12,7 +12,7 @@ class PenjualanController extends Controller
     {
         $nameUser = Auth::user()->name;
 
-        $dataPenjualan = Penjualan::all();
+        $dataPenjualan = Penjualan::orderBy('tahun', 'asc')->get();
         return view('penjualan.index', compact('nameUser', 'dataPenjualan'));
     }
 

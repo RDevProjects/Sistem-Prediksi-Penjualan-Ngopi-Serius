@@ -23,75 +23,53 @@
 @section('content')
     <div class="col-8 mx-auto">
         <div class="card">
-            <div class="card-header">
-                <div class="card-title">Tambah Penjualan</div>
-            </div>
             <div class="card-body">
-                <form
-                    action="{{ isset($penjualan) ? route('penjualan.update', $penjualan->id) : route('penjualan.store') }}"
-                    method="POST">
+                <form method="POST" action="{{ route('analisis.post') }}">
                     @csrf
-                    @if (isset($penjualan))
-                        @method('PUT')
-                    @endif
-                    @csrf
-                    <div class="form-group mb-3">
-                        <label for="bulan">Bulan</label>
-                        <select class="form-control" id="bulan" name="bulan" required>
-                            <option value="" disabled selected>Pilih Bulan</option>
-                            <option value="Januari"
-                                {{ isset($penjualan) && $penjualan->bulan == 'Januari' ? 'selected' : '' }}>Januari
-                            </option>
-                            <option value="Februari"
-                                {{ isset($penjualan) && $penjualan->bulan == 'Februari' ? 'selected' : '' }}>Februari
-                            </option>
-                            <option value="Maret"
-                                {{ isset($penjualan) && $penjualan->bulan == 'Maret' ? 'selected' : '' }}>Maret</option>
-                            <option value="April"
-                                {{ isset($penjualan) && $penjualan->bulan == 'April' ? 'selected' : '' }}>April</option>
-                            <option value="Mei" {{ isset($penjualan) && $penjualan->bulan == 'Mei' ? 'selected' : '' }}>
-                                Mei</option>
-                            <option value="Juni" {{ isset($penjualan) && $penjualan->bulan == 'Juni' ? 'selected' : '' }}>
-                                Juni</option>
-                            <option value="Juli" {{ isset($penjualan) && $penjualan->bulan == 'Juli' ? 'selected' : '' }}>
-                                Juli</option>
-                            <option value="Agustus"
-                                {{ isset($penjualan) && $penjualan->bulan == 'Agustus' ? 'selected' : '' }}>Agustus
-                            </option>
-                            <option value="September"
-                                {{ isset($penjualan) && $penjualan->bulan == 'September' ? 'selected' : '' }}>
-                                September</option>
-                            <option value="Oktober"
-                                {{ isset($penjualan) && $penjualan->bulan == 'Oktober' ? 'selected' : '' }}>Oktober
-                            </option>
-                            <option value="November"
-                                {{ isset($penjualan) && $penjualan->bulan == 'November' ? 'selected' : '' }}>November
-                            </option>
-                            <option value="Desember"
-                                {{ isset($penjualan) && $penjualan->bulan == 'Desember' ? 'selected' : '' }}>Desember
-                            </option>
-                        </select>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="bulanAwal">Pilih Bulan:</label>
+                            <select id="bulanAwal" name="bulanAwal" class="form-control">
+                                <option value="" disabled selected>Pilih Bulan Awal</option>
+                                @foreach ($dataPenjualan as $penjualan)
+                                    <option value="{{ $penjualan->bulan }}">{{ $penjualan->bulan }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="tahunAwal">Pilih Tahun:</label>
+                            <select id="tahunAwal" name="tahunAwal" class="form-control">
+                                <option value="" disabled selected>Pilih Tahun Awal</option>
+                                @foreach ($dataPenjualanTahun as $penjualan)
+                                    <option value="{{ $penjualan->tahun }}">{{ $penjualan->tahun }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group mb-3">
-                        <label for="tahun">Tahun</label>
-                        <select class="form-control" id="tahun" name="tahun" required>
-                            <option value="">Pilih Tahun</option>
-                            @foreach (range(date('Y'), date('Y') - 10) as $tahun)
-                                <option value="{{ $tahun }}"
-                                    {{ old('tahun', isset($penjualan) ? $penjualan->tahun : '') == $tahun ? 'selected' : '' }}>
-                                    {{ $tahun }}</option>
-                            @endforeach
-                        </select>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="bulanAkhir">Pilih Bulan:</label>
+                            <select id="bulanAkhir" name="bulanAkhir" class="form-control">
+                                <option value="" disabled selected>Pilih Bulan Akhir</option>
+                                @foreach ($dataPenjualan as $penjualan)
+                                    <option value="{{ $penjualan->bulan }}">{{ $penjualan->bulan }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="tahunAkhir">Pilih Tahun:</label>
+                            <select id="tahunAkhir" name="tahunAkhir" class="form-control">
+                                <option value="" disabled selected>Pilih Tahun Akhir</option>
+                                @foreach ($dataPenjualanTahun as $penjualan)
+                                    <option value="{{ $penjualan->tahun }}">{{ $penjualan->tahun }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group mb-3">
-                        <label for="jumlah">Jumlah</label>
-                        <input type="number" class="form-control" id="jumlah" name="jumlah" placeholder="Enter Jumlah"
-                            value="{{ old('jumlah', isset($penjualan) ? $penjualan->jumlah : '') }}" min="0"
-                            required />
-                    </div>
-                    <div class="form-group mb-3 d-flex justify-content-start">
-                        <button type="submit" class="btn btn-success me-2">Submit</button>
-                        <button type="reset" class="btn btn-secondary" id="resetButton">Clear</button>
+                    <div class="row mt-4">
+                        <div class="col text-center">
+                            <button type="submit" class="btn btn-primary">Analisa</button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -129,7 +107,7 @@
                             <th>Bulan</th>
                             <th>Tahun</th>
                             <th>Jumlah Penjualan</th>
-                            <th>Action</th>
+                            {{-- <th>Action</th> --}}
                         </tr>
                     </thead>
                     <tbody>
@@ -139,7 +117,7 @@
                                 <td>{{ $penjualan->bulan }}</td>
                                 <td>{{ $penjualan->tahun }}</td>
                                 <td>{{ number_format($penjualan->jumlah, 0, ',', '.') }}</td>
-                                <td>
+                                {{-- <td>
                                     <a href="{{ route('penjualan.edit', $penjualan->id) }}"
                                         class="btn btn-warning btn-sm">Edit</a>
                                     <button class="btn btn-danger btn-sm"
@@ -150,7 +128,7 @@
                                         @csrf
                                         @method('DELETE')
                                     </form>
-                                </td>
+                                </td> --}}
                             </tr>
                         @endforeach
                     </tbody>

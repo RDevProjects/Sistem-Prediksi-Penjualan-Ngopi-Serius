@@ -34,9 +34,16 @@
                 Perdiksi
             </li>
 
+            <li class="sidebar-item {{ Request::is('dashboard/analisis') ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ route('analisis') }}">
+                    <i class="align-middle" data-feather="search"></i> <span class="align-middle">Analisis</span>
+                </a>
+            </li>
+
             <li class="sidebar-item">
                 <a class="sidebar-link" href="pages-profile.html">
-                    <i class="align-middle" data-feather="search"></i> <span class="align-middle">Analisis</span>
+                    <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Lihat Hasil
+                        Analisis</span>
                 </a>
             </li>
             {{-- 
@@ -48,13 +55,6 @@
 
             <li class="sidebar-header">
                 Analisis
-            </li>
-
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="pages-profile.html">
-                    <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Lihat Hasil
-                        Analisis</span>
-                </a>
             </li> --}}
 
         </ul>
