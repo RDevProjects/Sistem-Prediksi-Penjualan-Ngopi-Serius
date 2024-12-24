@@ -24,6 +24,22 @@
     <div class="col-8 mx-auto">
         <div class="card">
             <div class="card-body">
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
+                @if ($errors->any())
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        @foreach ($errors->all() as $error)
+                            <div>{{ $error }}</div>
+                        @endforeach
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
                 <form method="POST" action="{{ route('analisis.post') }}">
                     @csrf
                     <div class="row mb-3">
@@ -75,10 +91,7 @@
             </div>
         </div>
     </div>
-@endsection
-
-@if (isset($result) && count($result) > 0)
-    @section('content2')
+    @if (isset($result) && count($result) > 0)
         <div class="col-12 mx-auto">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
@@ -143,11 +156,33 @@
                             </tr>
                         </tfoot>
                     </table>
+                    <div class="row mt-4">
+                        <div class="col text-center">
+                            <form method="POST" action="{{ route('analisis.storeAnalisa') }}">
+                                @csrf
+                                <input type="hidden" name="bulanAwal" value="{{ request('bulanAwal') }}">
+                                <input type="hidden" name="tahunAwal" value="{{ request('tahunAwal') }}">
+                                <input type="hidden" name="bulanAkhir" value="{{ request('bulanAkhir') }}">
+                                <input type="hidden" name="tahunAkhir" value="{{ request('tahunAkhir') }}">
+                                @foreach ($result as $data)
+                                    <input type="hidden" name="tahun[]" value="{{ $data['tahun'] }}">
+                                    <input type="hidden" name="bulan[]" value="{{ $data['bulan'] }}">
+                                    <input type="hidden" name="jumlah[]" value="{{ $data['penjualan'] }}">
+                                    <input type="hidden" name="wma[]" value="{{ $data['wma'] }}">
+                                    <input type="hidden" name="mad[]" value="{{ $data['mad'] }}">
+                                    <input type="hidden" name="mse[]" value="{{ $data['mse'] }}">
+                                    <input type="hidden" name="mape[]" value="{{ $data['mape'] }}">
+                                @endforeach
+                                <button type="submit" class="btn btn-success">Save</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    @endsection
-@endif
+    @endif
+@endsection
+
 
 @push('scripts')
     <!-- Include jQuery and DataTables JS & CSS -->

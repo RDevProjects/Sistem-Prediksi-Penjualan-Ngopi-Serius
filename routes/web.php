@@ -30,6 +30,7 @@ Route::middleware([isLogin::class])->prefix('dashboard')->group(function () {
     Route::post('/analisis', [AnalisaController::class, 'analisis'])->name('analisis.post');
     Route::get('/analisis/show', [AnalisaController::class, 'show'])->name('analisis.show');
     Route::get('/analisis/view', [AnalisaController::class, 'hasil_analisa'])->name('analisis.view');
+    Route::post('/analisis/storeAnalisa', [AnalisaController::class, 'storeAnalisa'])->name('analisis.storeAnalisa');
 });
 
 
