@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Analisa extends Model
 {
     protected $table = 'analisa';
-    protected $fillable = ['bulan', 'tahun', 'jumlah'];
+    protected $fillable = ['bulan', 'tahun', 'jumlah', 'wma', 'mad', 'mse', 'mape'];
 }

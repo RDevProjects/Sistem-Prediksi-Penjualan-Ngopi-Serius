@@ -77,66 +77,77 @@
     </div>
 @endsection
 
-@section('content2')
-    <div class="col-8 mx-auto">
-        <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="card-title mb-0">Data Penjualan</h5>
-                @if (session('success'))
-                    <div class="alert alert-success alert-dismissible fade show text-center bg-success text-white p-3 rounded"
-                        role="alert">
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
+@if (isset($result) && count($result) > 0)
+    @section('content2')
+        <div class="col-12 mx-auto">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">Data Penjualan</h5>
+                    @if (session('success'))
+                        <div class="alert alert-success alert-dismissible fade show text-center bg-success text-white p-3 rounded"
+                            role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
 
-                @if (session('error'))
-                    <div class="alert alert-danger bg-danger alert-dismissible fade show text-center bg-success text-white p-3 rounded"
-                        role="alert">
-                        {{ session('error') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
-            </div>
+                    @if (session('error'))
+                        <div class="alert alert-danger bg-danger alert-dismissible fade show text-center bg-success text-white p-3 rounded"
+                            role="alert">
+                            {{ session('error') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                </div>
 
-            <div class="card-body">
-                <table id="penjualanTable" class="table table-striped table-bordered" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Bulan</th>
-                            <th>Tahun</th>
-                            <th>Jumlah Penjualan</th>
-                            {{-- <th>Action</th> --}}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($dataPenjualan as $index => $penjualan)
+                <div class="card-body">
+                    <table id="penjualanTable" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
                             <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $penjualan->bulan }}</td>
-                                <td>{{ $penjualan->tahun }}</td>
-                                <td>{{ number_format($penjualan->jumlah, 0, ',', '.') }}</td>
-                                {{-- <td>
-                                    <a href="{{ route('penjualan.edit', $penjualan->id) }}"
-                                        class="btn btn-warning btn-sm">Edit</a>
-                                    <button class="btn btn-danger btn-sm"
-                                        onclick="deletePenjualan({{ $penjualan->id }})">Delete</button>
-                                    <form id="delete-form-{{ $penjualan->id }}"
-                                        action="{{ route('penjualan.delete', $penjualan->id) }}" method="POST"
-                                        style="display: none;">
-                                        @csrf
-                                        @method('DELETE')
-                                    </form>
-                                </td> --}}
+                                <th>Tahun</th>
+                                <th>Bulan</th>
+                                <th>No</th>
+                                <th>Penjualan Kopi</th>
+                                <th>WMA</th>
+                                <th>MAD</th>
+                                <th>MSE</th>
+                                <th>MAPE</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($result as $index => $data)
+                                <tr>
+                                    <td>{{ $data['tahun'] }}</td>
+                                    <td>{{ $data['bulan'] }}</td>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ number_format($data['penjualan'], 0, ',', '.') }}</td>
+                                    <td>{{ $data['wma'] ?? '' }}</td>
+                                    <td>{{ $data['mad'] ?? '' }}</td>
+                                    <td>{{ $data['mse'] ?? '' }}</td>
+                                    <td>{{ $data['mape'] ?? '' }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="5">Total</th>
+                                <th>{{ $totalMAD }}</th>
+                                <th>{{ $totalMSE }}</th>
+                                <th>{{ $totalMAPE }}</th>
+                            </tr>
+                            <tr>
+                                <th colspan="5">Average</th>
+                                <th>{{ $averageMAD }}</th>
+                                <th>{{ $averageMSE }}</th>
+                                <th>{{ $averageMAPE }}</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-@endsection
+    @endsection
+@endif
 
 @push('scripts')
     <!-- Include jQuery and DataTables JS & CSS -->
@@ -149,34 +160,12 @@
     <script>
         $(document).ready(function() {
             $('#penjualanTable').DataTable({
-                "paging": true,
-                "searching": true,
-                "ordering": true,
-                "info": true,
+                "paging": false,
+                "searching": false,
+                "ordering": false,
+                "info": false,
                 "responsive": true,
-                "lengthMenu": [5, 10, 25, 50, 100]
             });
-        });
-
-        function deletePenjualan(id) {
-            Swal.fire({
-                title: 'Apakah kamu yakin?',
-                text: "Kamu tidak akan bisa mengembalikannya!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, hapus!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('delete-form-' + id).submit();
-                }
-            })
-        }
-        document.getElementById('resetButton').addEventListener('click', function() {
-            document.getElementById('bulan').selectedIndex = 0;
-            document.getElementById('tahun').selectedIndex = 0;
-            document.getElementById('jumlah').value = '';
         });
     </script>
 @endpush

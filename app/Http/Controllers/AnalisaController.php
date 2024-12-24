@@ -19,6 +19,13 @@ class AnalisaController extends Controller
 
     public function analisis(Request $request)
     {
+        $request->validate([
+            'bulanAwal' => 'required',
+            'tahunAwal' => 'required',
+            'bulanAkhir' => 'required',
+            'tahunAkhir' => 'required'
+        ]);
+
         $months = [
             'Januari' => 1, 'Februari' => 2, 'Maret' => 3, 'April' => 4,
             'Mei' => 5, 'Juni' => 6, 'Juli' => 7, 'Agustus' => 8,
@@ -46,6 +53,12 @@ class AnalisaController extends Controller
         //     'penjualan' => $penjualan,
         //     'request' => $request->all()
         // ]);
+
+        $nameUser = Auth::user()->name;
+
+        $dataPenjualan = Penjualan::select('bulan')->distinct()->get();
+        $dataPenjualanTahun = Penjualan::select('tahun')->distinct()->get();
+
         $weights = [0.1, 0.2, 0.7]; // Bobot
 
         $result = [];
@@ -63,11 +76,11 @@ class AnalisaController extends Controller
 
                 $mad = abs($data->jumlah - $wma);
                 $mse = pow($mad, 2);
-                $mape = $mad / $data->jumlah;
+                $mape = round($mad / $data->jumlah, 2);
 
-                $totalMAD += $mad;
-                $totalMSE += $mse;
-                $totalMAPE += $mape;
+                $totalMAD += round($mad, 2);
+                $totalMSE += round($mse, 2);
+                $totalMAPE += round($mape, 2);
 
                 $result[] = [
                     'tahun' => $data->tahun,
@@ -93,9 +106,9 @@ class AnalisaController extends Controller
             }
         }
 
-        $averageMAD = $totalMAD / count($result);
-        $averageMSE = $totalMSE / count($result);
-        $averageMAPE = $totalMAPE / count($result);
+        $averageMAD = $totalMAD / 9;
+        $averageMSE = $totalMSE / 9;
+        $averageMAPE = round(($totalMAPE / 9) * 100, 2);
         // Prediksi bulan Januari berikutnya
         $lastData = end($penjualan);
         $prediksiJanuari = (
@@ -115,12 +128,17 @@ class AnalisaController extends Controller
             'mape' => null
         ];
 
-        return response()->json([
-            'result' => $result,
-            'averageMAD' => $averageMAD,
-            'averageMSE' => $averageMSE,
-            'averageMAPE' => $averageMAPE,
-            'prediksiJanuari' => $prediksiJanuari
-        ]);
+        // return response()->json([
+        //     'result' => $result,
+        //     'totalMAD' => $totalMAD,
+        //     'totalMSE' => $totalMSE,
+        //     'totalMAPE' => $totalMAPE,
+        //     'averageMAD' => $averageMAD,
+        //     'averageMSE' => $averageMSE,
+        //     'averageMAPE' => $averageMAPE,
+        //     'prediksiJanuari' => $prediksiJanuari
+        // ]);
+
+        return view('analisa.index', compact('result', 'totalMAD', 'totalMSE', 'totalMAPE', 'averageMAD', 'averageMSE', 'averageMAPE', 'nameUser', 'dataPenjualan', 'dataPenjualanTahun'));
     }
 }
