@@ -17,8 +17,7 @@ class DashboardController extends Controller
         $dataPenjualan = Penjualan::sum('jumlah');
 
         $dataAnalisa = Analisa::get();
-        $dataAnalisaCount = Analisa::count();
 
-        return view('index', compact('dataAnalisa', 'nameUser', 'jumlahDataPenjualan', 'dataPenjualan', 'dataAnalisaCount'));
+        return view('index', compact('dataAnalisa', 'nameUser', 'jumlahDataPenjualan', 'dataPenjualan'));
     }
 }
