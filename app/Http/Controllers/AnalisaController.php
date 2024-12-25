@@ -165,31 +165,30 @@ class AnalisaController extends Controller
                 ]);
             }
 
-            $months = [
-                'Januari' => 1, 'Februari' => 2, 'Maret' => 3, 'April' => 4,
-                'Mei' => 5, 'Juni' => 6, 'Juli' => 7, 'Agustus' => 8,
-                'September' => 9, 'Oktober' => 10, 'November' => 11, 'Desember' => 12
-            ];
+            // $months = [
+            //     'Januari' => 1, 'Februari' => 2, 'Maret' => 3, 'April' => 4,
+            //     'Mei' => 5, 'Juni' => 6, 'Juli' => 7, 'Agustus' => 8,
+            //     'September' => 9, 'Oktober' => 10, 'November' => 11, 'Desember' => 12
+            // ];
 
-            $bulanAwal = $months[$request->bulanAwal];
-            $tahunAwal = $request->tahunAwal;
-            $bulanAkhir = $months[$request->bulanAkhir];
-            $tahunAkhir = $request->tahunAkhir;
+            // $bulanAwal = $months[$request->bulanAwal];
+            // $tahunAwal = $request->tahunAwal;
+            // $bulanAkhir = $months[$request->bulanAkhir];
+            // $tahunAkhir = $request->tahunAkhir;
 
-            Penjualan::where(function ($query) use ($tahunAwal, $bulanAwal) {
-                $query->where('tahun', '>', $tahunAwal)
-                    ->orWhere(function ($query) use ($tahunAwal, $bulanAwal) {
-                        $query->where('tahun', '=', $tahunAwal)
-                            ->where('bulan', '>=', $bulanAwal);
-                    });
-            })->where(function ($query) use ($tahunAkhir, $bulanAkhir) {
-                $query->where('tahun', '<', $tahunAkhir)
-                    ->orWhere(function ($query) use ($tahunAkhir, $bulanAkhir) {
-                        $query->where('tahun', '=', $tahunAkhir)
-                            ->where('bulan', '<=', $bulanAkhir);
-                    });
-            })->delete();
-
+            // Penjualan::where(function ($query) use ($tahunAwal, $bulanAwal) {
+            //     $query->where('tahun', '>', $tahunAwal)
+            //         ->orWhere(function ($query) use ($tahunAwal, $bulanAwal) {
+            //             $query->where('tahun', '=', $tahunAwal)
+            //                 ->where('bulan', '>=', $bulanAwal);
+            //         });
+            // })->where(function ($query) use ($tahunAkhir, $bulanAkhir) {
+            //     $query->where('tahun', '<', $tahunAkhir)
+            //         ->orWhere(function ($query) use ($tahunAkhir, $bulanAkhir) {
+            //             $query->where('tahun', '=', $tahunAkhir)
+            //                 ->where('bulan', '<=', $bulanAkhir);
+            //         });
+            // })->delete();
             
             DB::commit();
             
