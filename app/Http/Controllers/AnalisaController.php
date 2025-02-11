@@ -16,7 +16,7 @@ class AnalisaController extends Controller
 
         $dataPenjualan = Penjualan::select('bulan')->distinct()->get();
         $dataPenjualanTahun = Penjualan::select('tahun')->distinct()->get();
-        return view('analisa.index', compact('nameUser','dataPenjualan', 'dataPenjualanTahun'));
+        return view('analisa.index', compact('nameUser', 'dataPenjualan', 'dataPenjualanTahun'));
     }
 
 
@@ -30,9 +30,18 @@ class AnalisaController extends Controller
         ]);
 
         $months = [
-            'Januari' => 1, 'Februari' => 2, 'Maret' => 3, 'April' => 4,
-            'Mei' => 5, 'Juni' => 6, 'Juli' => 7, 'Agustus' => 8,
-            'September' => 9, 'Oktober' => 10, 'November' => 11, 'Desember' => 12
+            'Januari' => 1,
+            'Februari' => 2,
+            'Maret' => 3,
+            'April' => 4,
+            'Mei' => 5,
+            'Juni' => 6,
+            'Juli' => 7,
+            'Agustus' => 8,
+            'September' => 9,
+            'Oktober' => 10,
+            'November' => 11,
+            'Desember' => 12
         ];
 
         $bulanAwal = $months[$request->bulanAwal];
@@ -42,13 +51,13 @@ class AnalisaController extends Controller
             $query->where('tahun', '>', $request->tahunAwal)
                 ->orWhere(function ($query) use ($request, $bulanAwal) {
                     $query->where('tahun', '=', $request->tahunAwal)
-                            ->where('bulan', '>=', $bulanAwal);
+                        ->where('bulan', '>=', $bulanAwal);
                 });
         })->where(function ($query) use ($request, $bulanAkhir) {
             $query->where('tahun', '<', $request->tahunAkhir)
                 ->orWhere(function ($query) use ($request, $bulanAkhir) {
                     $query->where('tahun', '=', $request->tahunAkhir)
-                            ->where('bulan', '<=', $bulanAkhir);
+                        ->where('bulan', '<=', $bulanAkhir);
                 });
         })->orderBy('tahun')->orderBy('bulan')->get();
 
@@ -100,7 +109,7 @@ class AnalisaController extends Controller
 
         $averageMAD = $totalMAD / 9;
         $averageMSE = $totalMSE / 9;
-        $averageMAPE = round(($totalMAPE / 9) * 100, 2);
+        $averageMAPE = round(($totalMAPE / 9), 3);
 
         // Prediksi bulan Januari berikutnya
         $prediksiJanuari = (
@@ -121,7 +130,7 @@ class AnalisaController extends Controller
         ];
 
         $dataPenjualan = Penjualan::select('bulan')->distinct()->get();
-            $dataPenjualanTahun = Penjualan::select('tahun')->distinct()->get();
+        $dataPenjualanTahun = Penjualan::select('tahun')->distinct()->get();
         return view('analisa.index', compact('result', 'totalMAD', 'totalMSE', 'totalMAPE', 'averageMAD', 'averageMSE', 'averageMAPE', 'prediksiJanuari', 'dataPenjualan', 'dataPenjualanTahun'));
     }
 
@@ -148,9 +157,9 @@ class AnalisaController extends Controller
             $mad = $request->input('mad');
             $mse = $request->input('mse');
             $mape = $request->input('mape');
-            
+
             DB::table('analisa')->delete();
-            
+
             foreach ($tahun as $index => $tahunValue) {
                 DB::table('analisa')->insert([
                     'tahun' => $tahunValue,
@@ -189,9 +198,9 @@ class AnalisaController extends Controller
             //                 ->where('bulan', '<=', $bulanAkhir);
             //         });
             // })->delete();
-            
+
             DB::commit();
-            
+
             return redirect()->route('analisis')->with('success', 'Data analisa berhasil disimpan');
         } catch (\Exception $e) {
             DB::rollBack();
@@ -203,13 +212,13 @@ class AnalisaController extends Controller
     public function show()
     {
         $dataAnalisa = DB::table('analisa')
-        ->select(DB::raw('*, DATE_FORMAT(created_at, "%Y-%m-%d %H:%i") as created_at_minute'))
-        ->groupBy('created_at_minute', 'id', 'tahun', 'bulan', 'jumlah', 'wma', 'mad', 'mse', 'mape', 'created_at', 'updated_at')
+            ->select(DB::raw('*, DATE_FORMAT(created_at, "%Y-%m-%d %H:%i") as created_at_minute'))
+            ->groupBy('created_at_minute', 'id', 'tahun', 'bulan', 'jumlah', 'wma', 'mad', 'mse', 'mape', 'created_at', 'updated_at')
             ->orderBy('created_at_minute')
             ->get();
         return view('analisa.hasil', compact('dataAnalisa'));
     }
-    
+
     public function hasil_analisa()
     {
         $dataAnalisa = DB::table('analisa')->get();
@@ -235,7 +244,7 @@ class AnalisaController extends Controller
         // Calculate averages based on the number of predicted months (9)
         $averageMAD = round($totalMAD / 9, 2);
         $averageMSE = round($totalMSE / 9, 2);
-        $averageMAPE = round(($totalMAPE / 9) * 100, 2);
+        $averageMAPE = round(($totalMAPE / 9), 3);
         return view('analisa.hasil', compact('dataAnalisa', 'averageMAD', 'averageMSE', 'averageMAPE', 'totalMAD', 'totalMSE', 'totalMAPE'));
     }
 }

@@ -90,7 +90,7 @@
                                 <td>{{ $data->tahun }}</td>
                                 <td>{{ $data->bulan }}</td>
                                 <td>{{ number_format($data->jumlah, 0, ',', '.') }}</td>
-                                <td>{{ number_format($data->wma ?? 0, 0, ',', '.') }}</td>
+                                <td>{{ $data->wma ?? '' }}</td>
                                 <td>{{ $data->mad ?? '' }}</td>
                                 <td>{{ $data->mse ?? '' }}</td>
                                 <td>{{ $data->mape ?? '' }}</td>
