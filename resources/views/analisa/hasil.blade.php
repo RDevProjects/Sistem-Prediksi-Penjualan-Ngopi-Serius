@@ -118,6 +118,23 @@
     <div class="col-xl-12">
         <div class="card flex-fill w-100">
             <div class="card-header">
+                <h5 class="mb-0 card-title">Hasil Prediksi</h5>
+            </div>
+            <div class="py-3 text-center card-body">
+                <p>Hasil analisa prediksi, peramalan pada bulan <b>{{ $dataAnalisa->last()->bulan }}</b> tahun<b>
+                        {{ $dataAnalisa->last()->tahun }}</b> menyediakan
+                    <b>{{ $dataAnalisa->last()->wma ?? 'Data tidak tersedia' }}</b> kopi dengan nilai <b>MAD</b>
+                    sebesar
+                    <b>{{ $averageMAD ?? 'Data tidak tersedia' }}</b>, MSE sebesar
+                    <b>{{ $averageMSE ?? 'Data tidak tersedia' }}</b>, dan nilai MAPE sebesar
+                    <b>{{ $averageMAPE ?? 'Data tidak tersedia' }}%</b>.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-12">
+        <div class="card flex-fill w-100">
+            <div class="card-header">
 
                 <h5 class="mb-0 card-title">Prediksi</h5>
             </div>

@@ -157,6 +157,26 @@
                         </tfoot>
                     </table>
                     <div class="row mt-4">
+                        <div class="col-xl-12">
+                            <div class="card flex-fill w-100">
+                                <div class="card-header">
+                                    <h5 class="mb-0 card-title">Hasil Prediksi</h5>
+                                </div>
+                                <div class="py-3 text-center card-body">
+                                    @php $lastResult = end($result); @endphp
+                                    <p>Hasil analisa prediksi, peramalan pada bulan
+                                        <b>{{ $lastResult['bulan'] }}</b> tahun<b>
+                                            {{ $lastResult['tahun'] }}</b> menyediakan
+                                        <b>{{ $lastResult['wma'] ?? 'Data tidak tersedia' }}</b> kopi dengan nilai
+                                        <b>MAD</b>
+                                        sebesar
+                                        <b>{{ $averageMAD ?? 'Data tidak tersedia' }}</b>, MSE sebesar
+                                        <b>{{ $averageMSE ?? 'Data tidak tersedia' }}</b>, dan nilai MAPE sebesar
+                                        <b>{{ $averageMAPE ?? 'Data tidak tersedia' }}%</b>.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col text-center">
                             <form method="POST" action="{{ route('analisis.storeAnalisa') }}">
                                 @csrf

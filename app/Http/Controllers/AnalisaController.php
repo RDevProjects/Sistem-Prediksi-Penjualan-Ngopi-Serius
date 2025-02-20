@@ -107,8 +107,8 @@ class AnalisaController extends Controller
             }
         }
 
-        $averageMAD = $totalMAD / 9;
-        $averageMSE = $totalMSE / 9;
+        $averageMAD = round($totalMAD / 9, 2);
+        $averageMSE = round($totalMSE / 9, 2);
         $averageMAPE = round(($totalMAPE / 9), 3);
 
         // Prediksi bulan Januari berikutnya
